@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app="testBed">
+<head>
+	<title>
+		angularjs test bed
+	</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+</head>
+<body component>
+
+<label for="testSelect">
+	HTML select using ng-options:
+</label>
+<select name="testSelect" ng-options="n for n in quantityOptions" ng-model="quantityValue">
+</select>
+
+<br><br>
+
+Current value of scope.quantityValue: <span data-role="output">{{quantityValue}}</span>
+
+<script>
+'use strict';
+
+angular.module('testBed', [])
+.directive('component', function() {
+	return {
+		link:function(scope) {
+			scope.quantityOptions = [];
+			for (var a=1; a<11; a++) {
+				scope.quantityOptions.push(a);
+			}
+			scope.quantityValue = scope.quantityOptions[9];
+		}
+	}
+})
+</script>
+
+</body>
+</html>
