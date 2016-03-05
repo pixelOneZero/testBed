@@ -11,7 +11,7 @@
 
 <button id="postData">post data to iframe</button>
 
-<iframe src=""></iframe>
+<iframe src="" name="targetFrame"></iframe>
 
 <script>
 //'use strict'
@@ -20,9 +20,31 @@ var app = (function() {
 	this.initialize = function() {
 		var button = document.getElementById('postData');
 		button.addEventListener('click', function() {
-			
+			postToIframe('http://pixelonezero.com/', {'id':'1234567', 'lastname':'smith'}, 'targetFrame');
 		});
 	}
+
+	function postToIframe(path, params, target) {
+
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("target", target);
+		form.setAttribute('action', path)
+
+    for (var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+            form.appendChild(hiddenField);
+         }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+
 	return this;
 })()
 
